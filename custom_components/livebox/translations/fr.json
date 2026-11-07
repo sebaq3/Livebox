@@ -1,0 +1,39 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer Livebox Arcadyan",
+        "data": {
+          "host": "Adresse du routeur",
+          "password": "Mot de passe administrateur",
+          "port": "Port"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigurer Livebox Arcadyan",
+        "data": {
+          "host": "Adresse du routeur",
+          "password": "Mot de passe administrateur",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de se connecter au routeur",
+      "login_incorrect": "Le mot de passe est incorrect ou le routeur a refusé la connexion"
+    },
+    "abort": {
+      "already_configured": "Ce routeur est déjà configuré"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Suivi des appareils",
+        "data": {
+          "timeout_tracking": "Délai avant de marquer un appareil comme déconnecté"
+        }
+      }
+    }
+  }
+}

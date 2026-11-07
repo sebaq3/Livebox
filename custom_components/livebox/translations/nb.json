@@ -1,0 +1,39 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Konfigurer Livebox Arcadyan",
+        "data": {
+          "host": "Ruteradresse",
+          "password": "Administratorpassord",
+          "port": "Port"
+        }
+      },
+      "reconfigure": {
+        "title": "Konfigurer Livebox Arcadyan på nytt",
+        "data": {
+          "host": "Ruteradresse",
+          "password": "Administratorpassord",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Kunne ikke koble til ruteren",
+      "login_incorrect": "Passordet er feil, eller ruteren avviste innloggingen"
+    },
+    "abort": {
+      "already_configured": "Ruteren er allerede konfigurert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Enhetssporing",
+        "data": {
+          "timeout_tracking": "Tid før en enhet markeres som frakoblet"
+        }
+      }
+    }
+  }
+}
