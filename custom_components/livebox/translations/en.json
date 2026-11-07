@@ -3,6 +3,7 @@
     "step": {
       "user": {
         "title": "Configure Livebox Arcadyan",
+        "description": "The connection to the router uses unencrypted HTTP. Use this integration only on a trusted local network; someone with access to the network could intercept your credentials or router session.",
         "data": {
           "host": "Router address",
           "password": "Administration password",
@@ -11,6 +12,7 @@
       },
       "reconfigure": {
         "title": "Reconfigure Livebox Arcadyan",
+        "description": "The connection to the router uses unencrypted HTTP. Use this integration only on a trusted local network; someone with access to the network could intercept your credentials or router session.",
         "data": {
           "host": "Router address",
           "password": "Administration password",

@@ -3,6 +3,7 @@
     "step": {
       "user": {
         "title": "Configurer Livebox Arcadyan",
+        "description": "La connexion au routeur utilise HTTP sans chiffrement. Utilisez cette intégration uniquement sur un réseau local de confiance ; une personne ayant accès au réseau pourrait intercepter vos identifiants ou la session du routeur.",
         "data": {
           "host": "Adresse du routeur",
           "password": "Mot de passe administrateur",
@@ -11,6 +12,7 @@
       },
       "reconfigure": {
         "title": "Reconfigurer Livebox Arcadyan",
+        "description": "La connexion au routeur utilise HTTP sans chiffrement. Utilisez cette intégration uniquement sur un réseau local de confiance ; une personne ayant accès au réseau pourrait intercepter vos identifiants ou la session du routeur.",
         "data": {
           "host": "Adresse du routeur",
           "password": "Mot de passe administrateur",

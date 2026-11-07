@@ -3,6 +3,7 @@
     "step": {
       "user": {
         "title": "Konfigurer Livebox Arcadyan",
+        "description": "Tilkoblingen til ruteren bruker ukryptert HTTP. Bruk denne integrasjonen bare på et pålitelig lokalnett; noen med tilgang til nettverket kan fange opp påloggingsinformasjonen eller rutersesjonen din.",
         "data": {
           "host": "Ruteradresse",
           "password": "Administratorpassord",
@@ -11,6 +12,7 @@
       },
       "reconfigure": {
         "title": "Konfigurer Livebox Arcadyan på nytt",
+        "description": "Tilkoblingen til ruteren bruker ukryptert HTTP. Bruk denne integrasjonen bare på et pålitelig lokalnett; noen med tilgang til nettverket kan fange opp påloggingsinformasjonen eller rutersesjonen din.",
         "data": {
           "host": "Ruteradresse",
           "password": "Administratorpassord",

@@ -3,6 +3,7 @@
     "step": {
       "user": {
         "title": "Configurar Livebox Arcadyan",
+        "description": "La conexión al router usa HTTP sin cifrar. Usa esta integración solo en una red local confiable; alguien con acceso a la red podría interceptar tus credenciales o la sesión del router.",
         "data": {
           "host": "Dirección del router",
           "password": "Contraseña de administración",
@@ -11,6 +12,7 @@
       },
       "reconfigure": {
         "title": "Reconfigurar Livebox Arcadyan",
+        "description": "La conexión al router usa HTTP sin cifrar. Usa esta integración solo en una red local confiable; alguien con acceso a la red podría interceptar tus credenciales o la sesión del router.",
         "data": {
           "host": "Dirección del router",
           "password": "Contraseña de administración",
