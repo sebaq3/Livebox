@@ -1,0 +1,39 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Livebox Arcadyan",
+        "data": {
+          "host": "Router address",
+          "password": "Administration password",
+          "port": "Port"
+        }
+      },
+      "reconfigure": {
+        "title": "Reconfigure Livebox Arcadyan",
+        "data": {
+          "host": "Router address",
+          "password": "Administration password",
+          "port": "Port"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not connect to the router",
+      "login_incorrect": "The password is incorrect or the router rejected the login"
+    },
+    "abort": {
+      "already_configured": "This router is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Device tracking",
+        "data": {
+          "timeout_tracking": "Time before marking a device as disconnected"
+        }
+      }
+    }
+  }
+}

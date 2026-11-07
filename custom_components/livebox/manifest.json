@@ -1,0 +1,11 @@
+{
+  "domain": "livebox",
+  "name": "Orange Livebox device tracker",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/sebaq3/arcadyan",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/sebaq3/arcadyan/issues",
+  "version": "0.1.0"
+}
