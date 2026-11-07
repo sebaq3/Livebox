@@ -1,18 +1,18 @@
 """Tests for Arcadyan device tracking."""
 
+import pytest
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import STATE_HOME, STATE_NOT_HOME
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
-import pytest
 
 from custom_components.livebox.const import CONF_TRACKING_TIMEOUT, DOMAIN
 from custom_components.livebox.device_tracker import (
     _BASE_DEVICE_ATTRIBUTE_FIELDS,
     _copy_selected_fields,
     _get_signal_quality,
-    _is_wireless_device,
     _is_wired_device,
+    _is_wireless_device,
 )
 
 from .helpers import MockRouterSession
@@ -55,9 +55,7 @@ def test_copy_selected_device_attributes() -> None:
     ) == {"interface_name": "eth1", "manufacturer": "Orange"}
 
 
-def _entity_id(
-    hass: HomeAssistant, config_entry: ConfigEntry, unique_id: str
-) -> str:
+def _entity_id(hass: HomeAssistant, config_entry: ConfigEntry, unique_id: str) -> str:
     """Resolve the tracker entity ID from the entity registry."""
     registry = er.async_get(hass)
     entity_id = registry.async_get_entity_id("device_tracker", DOMAIN, unique_id)
@@ -112,9 +110,7 @@ async def test_adds_and_marks_devices_away(
     await config_entry.runtime_data.async_refresh()
     await hass.async_block_till_done()
 
-    second_entity_id = _entity_id(
-        hass, config_entry, second_mac
-    )
+    second_entity_id = _entity_id(hass, config_entry, second_mac)
     state = hass.states.get(second_entity_id)
     assert state is not None
     assert state.state == STATE_HOME

@@ -1,5 +1,5 @@
-import base64
 import ast
+import base64
 import hashlib
 import logging
 import re
@@ -48,7 +48,7 @@ def _decode_login_material(page):
             decoded = base64.b64decode(encoded + "=" * (-len(encoded) % 4)).decode(
                 "utf-8"
             )
-        except (ValueError, UnicodeDecodeError):
+        except ValueError, UnicodeDecodeError:
             continue
         if len(decoded) >= 49:
             return decoded[:32], decoded[32:48], decoded[48:]
@@ -61,10 +61,14 @@ def _encode_login_field(value, key, iv):
         raise ValueError("El router solo admite caracteres ASCII en el login")
     encoded_value = base64.b64encode(value.encode("latin-1")).decode("ascii")
     digest = hashlib.md5(encoded_value.encode("ascii")).hexdigest()
-    nonce = "".join(secrets.choice(string.digits + string.ascii_lowercase) for _ in range(32))
+    nonce = "".join(
+        secrets.choice(string.digits + string.ascii_lowercase) for _ in range(32)
+    )
     plaintext = base64.b64encode(f"{nonce} {digest}".encode("ascii"))
     plaintext += b"\x00" * (-len(plaintext) % 16)
-    encryptor = Cipher(algorithms.AES(key.encode("latin-1")), modes.CBC(iv.encode("latin-1"))).encryptor()
+    encryptor = Cipher(
+        algorithms.AES(key.encode("latin-1")), modes.CBC(iv.encode("latin-1"))
+    ).encryptor()
     ciphertext = encryptor.update(plaintext) + encryptor.finalize()
     return "".join(f"%{byte:02x}" for byte in ciphertext)
 
@@ -79,7 +83,9 @@ def _parse_client_devices(response_text):
         match = _CLIENT_FIELD_RE.fullmatch(property_name)
         if match:
             field_name, index = match.groups()
-            configured_clients.setdefault(index, {})[field_name.lower()] = property_value.strip()
+            configured_clients.setdefault(index, {})[field_name.lower()] = (
+                property_value.strip()
+            )
 
     def extract_array(variable_name):
         assignment = re.search(
@@ -111,7 +117,7 @@ def _parse_client_devices(response_text):
                 if depth == 0:
                     try:
                         value = ast.literal_eval(response_text[start : index + 1])
-                    except (SyntaxError, ValueError):
+                    except SyntaxError, ValueError:
                         return []
                     return value if isinstance(value, list) else []
         return []
@@ -191,7 +197,7 @@ class LiveboxDataUpdateCoordinator(DataUpdateCoordinator):
         )
         # CookieJar con unsafe=True permite gestionar cookies en IPs locales
         self.session = aiohttp.ClientSession(cookie_jar=aiohttp.CookieJar(unsafe=True))
-        
+
         super().__init__(
             hass,
             _LOGGER,
@@ -278,7 +284,9 @@ class LiveboxDataUpdateCoordinator(DataUpdateCoordinator):
                 return False
 
         except Exception as err:
-            _LOGGER.error("Error de conexión al intentar autenticar en Livebox: %s", err)
+            _LOGGER.error(
+                "Error de conexión al intentar autenticar en Livebox: %s", err
+            )
             return False
 
     async def _async_update_data(self):
@@ -306,7 +314,7 @@ class LiveboxDataUpdateCoordinator(DataUpdateCoordinator):
             ),
             "X-Requested-With": "XMLHttpRequest",
         }
-        
+
         for attempt in range(2):
             try:
                 async with self.session.get(
@@ -315,19 +323,19 @@ class LiveboxDataUpdateCoordinator(DataUpdateCoordinator):
                     if response.status == 200:
                         # Si devuelve texto plano/javascript con los clientes, lo procesamos o retornamos
                         text_data = await response.text()
-                        
+
                         # Si la sesión expiró, el router a veces responde con un script de redirección al login
                         if "login" in text_data.lower() and attempt == 0:
-                            _LOGGER.warning("La sesión del Livebox ha expirado. Renovando...")
+                            _LOGGER.warning(
+                                "La sesión del Livebox ha expirado. Renovando..."
+                            )
                             if await self.async_login():
                                 params["_tn"] = self.httoken
                                 continue
                             raise UpdateFailed("No se pudo autenticar en el Livebox.")
-                                
+
                         devices = _parse_client_devices(text_data)
-                        property_names = re.findall(
-                            r'addCfg\("([^"]+)"', text_data
-                        )
+                        property_names = re.findall(r'addCfg\("([^"]+)"', text_data)
                         client_property_names = [
                             name
                             for name in property_names
@@ -340,22 +348,30 @@ class LiveboxDataUpdateCoordinator(DataUpdateCoordinator):
                             client_property_names,
                         )
                         return {"devices": devices, "topology_repeaters": {}}
-                    
+
                     if response.status in (401, 403) and attempt == 0:
-                        _LOGGER.warning("La sesión del Livebox ha expirado (Código HTTP). Renovando...")
+                        _LOGGER.warning(
+                            "La sesión del Livebox ha expirado (Código HTTP). Renovando..."
+                        )
                         if await self.async_login():
                             params["_tn"] = self.httoken
                             continue
-                        
-                    raise UpdateFailed(f"Error al obtener datos, código HTTP: {response.status}")
-                    
+
+                    raise UpdateFailed(
+                        f"Error al obtener datos, código HTTP: {response.status}"
+                    )
+
             except aiohttp.ClientError as error:
                 if attempt == 0:
-                    _LOGGER.warning("Fallo de red temporal, reintentando login: %s", error)
+                    _LOGGER.warning(
+                        "Fallo de red temporal, reintentando login: %s", error
+                    )
                     if await self.async_login():
                         params["_tn"] = self.httoken
                         continue
-                    raise UpdateFailed("No se pudo renovar la sesión del Livebox.") from error
+                    raise UpdateFailed(
+                        "No se pudo renovar la sesión del Livebox."
+                    ) from error
                 raise UpdateFailed(f"Error de comunicación: {error}")
-                
+
         raise UpdateFailed("No se pudo mantener la sesión activa en el Livebox.")

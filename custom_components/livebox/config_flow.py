@@ -90,8 +90,7 @@ class LiveboxFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     timeout=10,
                 ) as response:
                     has_sid = any(
-                        cookie.key.upper() == "SID"
-                        for cookie in session.cookie_jar
+                        cookie.key.upper() == "SID" for cookie in session.cookie_jar
                     )
                     if response.status != 302 or not has_sid:
                         return None, {"base": "login_incorrect"}

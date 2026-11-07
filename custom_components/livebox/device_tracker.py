@@ -8,9 +8,9 @@ from typing import Any, cast
 from homeassistant.components.device_tracker.const import SourceType
 from homeassistant.components.device_tracker.entity import ScannerEntity
 from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import EntityDescription
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
 from . import LiveboxConfigEntry
@@ -106,10 +106,7 @@ async def async_setup_entry(
     for entity_entry in er.async_entries_for_config_entry(
         entity_registry, entry.entry_id
     ):
-        if (
-            entity_entry.domain == "device_tracker"
-            and entity_entry.platform == DOMAIN
-        ):
+        if entity_entry.domain == "device_tracker" and entity_entry.platform == DOMAIN:
             tracked_key = entity_entry.unique_id.removeprefix(
                 f"{coordinator.unique_id}_"
             )
@@ -117,10 +114,7 @@ async def async_setup_entry(
             new_entity_id = f"device_tracker.livebox_{object_id}"
             updates = {}
             existing_entry = entity_registry.async_get(new_entity_id)
-            if (
-                new_entity_id != entity_entry.entity_id
-                and existing_entry is None
-            ):
+            if new_entity_id != entity_entry.entity_id and existing_entry is None:
                 updates["new_entity_id"] = new_entity_id
             if entity_entry.disabled_by is not None:
                 updates["disabled_by"] = None
